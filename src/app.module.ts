@@ -3,6 +3,7 @@ import { EnvironmentConfigModule } from './infrastructure/config/environment-con
 import { DatabaseConfigModule } from './infrastructure/database/database.module';
 import { ExceptionsModule } from './infrastructure/exceptions/exceptions.module';
 import { LoggerModule } from './infrastructure/logger/logger.module';
+import { RabbitMQModule } from './infrastructure/messaging/rabbitmq/rabbitmq.module';
 import { RepositoriesModule } from './infrastructure/repositories/repositories.module';
 import { UsersModule } from './presentation/users/users.module';
 
@@ -14,6 +15,7 @@ import { UsersModule } from './presentation/users/users.module';
     RepositoriesModule,
     DatabaseConfigModule,
     UsersModule,
+    RabbitMQModule,
   ],
   controllers: [],
   providers: [],

@@ -1,9 +1,7 @@
-export interface DatabaseConfig {
+export interface EnvConfig {
   getDatabaseHost(): string;
   getDatabasePort(): number;
   getDatabaseUser(): string;
   getDatabasePassword(): string;
   getDatabaseName(): string;
-  getDatabaseSchema(): string;
-  getDatabaseSync(): boolean;
 }

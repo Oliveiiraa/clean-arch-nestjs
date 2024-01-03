@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { DatabaseConfig } from '../../../domain/config/database.interface';
+import { EnvConfig } from 'src/domain/config/env.interface';
 
 @Injectable()
-export class EnvironmentConfigService implements DatabaseConfig {
+export class EnvironmentConfigService implements EnvConfig {
   constructor(private configService: ConfigService) {}
 
   getDatabaseHost(): string {
@@ -32,5 +32,9 @@ export class EnvironmentConfigService implements DatabaseConfig {
 
   getDatabaseSync(): boolean {
     return this.configService.get<boolean>('DATABASE_SYNCHRONIZE');
+  }
+
+  getMessagingUrl(): string {
+    return this.configService.get<string>('MESSAGING_URL');
   }
 }

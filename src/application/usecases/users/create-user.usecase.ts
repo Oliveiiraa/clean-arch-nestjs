@@ -7,19 +7,25 @@ import { UseCase } from 'src/domain/base/use-case.base';
 import { UserCreateMapper } from 'src/domain/mappers/users/user-create.mapper';
 import { UserCreatedMapper } from 'src/domain/mappers/users/user.created.mapper';
 import { UserRepository } from 'src/domain/repositories/user.repository';
+import { RabbitMQService } from 'src/infrastructure/messaging/rabbitmq/rabbitmq.service';
 
 @Injectable()
 export class CreateUserUseCase implements UseCase<UserCreatedDto> {
   private userCreateMapper: UserCreateMapper;
   private userCreatedMapper: UserCreatedMapper;
 
-  constructor(private readonly repository: UserRepository) {
+  constructor(
+    private readonly repository: UserRepository,
+    private readonly rabbitMQService: RabbitMQService,
+  ) {
     this.userCreateMapper = new UserCreateMapper();
     this.userCreatedMapper = new UserCreatedMapper();
   }
 
   public execute(user: UserCreateDto): Observable<UserCreatedDto> {
     const entity = this.userCreateMapper.mapFrom(user);
+
+    this.rabbitMQService.pushToQueue('user:server', JSON.stringify(entity));
 
     return this.repository
       .insert(entity)
