@@ -1,21 +1,21 @@
 import { Module } from '@nestjs/common';
-import { UserRepository } from './core/repositories/user.repository';
-import { UsersCacheMemoryRepository } from './infrastructure/cache-memory/users/users-cache-memory.repository';
 import { EnvironmentConfigModule } from './infrastructure/config/environment-config/environment-config.module';
-import { UsersControllers } from './presentation/users/users.controller';
-import { CreateUserUseCase } from './usecases/users/create-user.usecase';
-import { GetAllUsersUseCase } from './usecases/users/get-all-users.usecase';
+import { DatabaseConfigModule } from './infrastructure/database/database.module';
+import { ExceptionsModule } from './infrastructure/exceptions/exceptions.module';
+import { LoggerModule } from './infrastructure/logger/logger.module';
+import { RepositoriesModule } from './infrastructure/repositories/repositories.module';
+import { UsersModule } from './presentation/users/users.module';
 
 @Module({
-  imports: [EnvironmentConfigModule],
-  controllers: [UsersControllers],
-  providers: [
-    {
-      provide: UserRepository,
-      useClass: UsersCacheMemoryRepository,
-    },
-    CreateUserUseCase,
-    GetAllUsersUseCase,
+  imports: [
+    EnvironmentConfigModule,
+    LoggerModule,
+    ExceptionsModule,
+    RepositoriesModule,
+    DatabaseConfigModule,
+    UsersModule,
   ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
