@@ -11,16 +11,12 @@ import { RabbitMQService } from 'src/infrastructure/messaging/rabbitmq/rabbitmq.
 
 @Injectable()
 export class CreateUserUseCase implements UseCase<UserCreatedDto> {
-  private userCreateMapper: UserCreateMapper;
-  private userCreatedMapper: UserCreatedMapper;
-
   constructor(
     private readonly repository: UserRepository,
     private readonly rabbitMQService: RabbitMQService,
-  ) {
-    this.userCreateMapper = new UserCreateMapper();
-    this.userCreatedMapper = new UserCreatedMapper();
-  }
+    private readonly userCreateMapper: UserCreateMapper,
+    private readonly userCreatedMapper: UserCreatedMapper,
+  ) {}
 
   public execute(user: UserCreateDto): Observable<UserCreatedDto> {
     const entity = this.userCreateMapper.mapFrom(user);

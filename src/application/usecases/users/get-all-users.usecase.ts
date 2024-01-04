@@ -8,11 +8,10 @@ import { UserRepository } from 'src/domain/repositories/user.repository';
 
 @Injectable()
 export class GetAllUsersUseCase implements UseCase<UserCreatedDto[]> {
-  private userCreatedMapper: UserCreatedMapper;
-
-  constructor(private readonly repository: UserRepository) {
-    this.userCreatedMapper = new UserCreatedMapper();
-  }
+  constructor(
+    private readonly repository: UserRepository,
+    private readonly userCreatedMapper: UserCreatedMapper,
+  ) {}
 
   public execute(): Observable<UserCreatedDto[]> {
     return this.repository
